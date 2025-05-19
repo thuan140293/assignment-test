@@ -101,7 +101,7 @@
       @close="drawerVisible = false"
     >
       <template #default>
-        <el-form :model="formUser" label-width="100px">
+        <el-form :model="formUser" label-width="100px" :label-position="labelPosition">
           <el-form-item label="Name">
             <el-input v-model="formUser.name" />
           </el-form-item>
@@ -195,6 +195,7 @@ const formUser = ref<UserListType>({
   company: { name: "" },
   address: { street: "", suite: "", city: "" },
 });
+const labelPosition = ref<FormProps['labelPosition']>('left');
 
 // Hooks
 onMounted(async () => {
@@ -359,5 +360,9 @@ function resetForm() {
   padding-right: 30px;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+.bold-label {
+  font-weight: bold;
 }
 </style>
