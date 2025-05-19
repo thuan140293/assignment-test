@@ -28,8 +28,7 @@ const authStore = useAuthStore();
 const currentYear = new Date().getFullYear();
 
 // Computed
-const layoutComponent = MainLayout;
-// const layoutComponent = computed(() =>
-//   authStore.isAuthenticated ? MainLayout : AuthLayout
-// );
+const layoutComponent = computed(() =>
+  authStore.isAuthenticated ? MainLayout : AuthLayout
+);
 </script>

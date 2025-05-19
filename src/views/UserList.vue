@@ -1,157 +1,35 @@
 <template>
   <div>
-    <!-- Toolbar -->
     <UserToolbar
       :initialQuery="searchQuery"
       @search="handleSearch"
       @export="handleExport"
       @add="handleAdd"
     />
-
-    <!-- Skeleton + Table -->
-    <el-skeleton
+    <UserTable
+      :data="filteredData"
       :loading="loading"
-      animated
-      :rows="15"
-      class="skeleton-wrapper"
-    >
-      <template #default>
-        <el-table
-          :data="filteredData"
-          style="width: 100%"
-          :table-layout="tableLayout"
-        >
-          <el-table-column type="selection" />
-          <el-table-column label="Date">
-            <template #default="scope">{{
-              formatDate(scope.row.date, "dd/MM/yyyy")
-            }}</template>
-          </el-table-column>
-          <el-table-column prop="name" label="Name" />
-          <el-table-column prop="phone" label="Phone" />
-          <el-table-column label="Address">
-            <template #default="scope">
-              {{ formatAddress(scope.row.address) }}
-            </template>
-          </el-table-column>
-          <el-table-column fixed="right" label="Operations">
-            <template #default="scope">
-              <el-button size="default" @click="handleClickDetail(scope.row)">
-                <el-icon><View /></el-icon>
-              </el-button>
-              <el-button size="default" @click="handleClickEdit(scope.row)">
-                <el-icon><EditPen /></el-icon>
-              </el-button>
-              <el-button
-                type="danger"
-                size="default"
-                @click.prevent="handleClickDelete(scope.row)"
-              >
-                <el-icon><Delete /></el-icon>
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </template>
-    </el-skeleton>
-
-    <!-- Detail form -->
-    <Drawer
-      v-model="detailDrawerVisible"
-      title="User Detail"
+      :tableLayout="tableLayout"
+      @detail="handleClickDetail"
+      @edit="handleClickEdit"
+      @delete="handleClickDelete"
+    />
+    <DetailDrawer
+      :model-value="detailDrawerVisible"
+      :loading="detailLoading"
+      :user="detailUser"
+      @update:modelValue="detailDrawerVisible = $event"
       @close="detailUser = null"
-    >
-      <template v-if="detailLoading">
-        <el-skeleton :rows="5" animated />
-      </template>
-      <template v-else-if="detailUser">
-        <el-descriptions title="Info" :column="1">
-          <el-descriptions-item label="Name">{{
-            detailUser?.name
-          }}</el-descriptions-item>
-          <el-descriptions-item label="Username">{{
-            detailUser?.username
-          }}</el-descriptions-item>
-          <el-descriptions-item label="Email">{{
-            detailUser?.email
-          }}</el-descriptions-item>
-          <el-descriptions-item label="Phone">{{
-            detailUser?.phone
-          }}</el-descriptions-item>
-          <el-descriptions-item label="Website">{{
-            detailUser?.website
-          }}</el-descriptions-item>
-          <el-descriptions-item label="Company">{{
-            detailUser?.company?.name
-          }}</el-descriptions-item>
-          <el-descriptions-item label="Address">
-            {{ formatAddress(detailUser?.address) }}
-          </el-descriptions-item>
-        </el-descriptions>
-      </template>
-      <template #footer>
-        <el-button @click="detailDrawerVisible = false">Close</el-button>
-      </template>
-    </Drawer>
-
-    <!-- Drawer for Add/Edit -->
-    <Drawer
-      v-model="drawerVisible"
-      :title="drawerMode === 'add' ? 'Create New User' : 'Edit User'"
-      @close="drawerVisible = false"
-    >
-      <template #default>
-        <el-form :model="formUser" label-width="100px" :label-position="labelPosition">
-          <el-form-item label="Name">
-            <el-input v-model="formUser.name" />
-          </el-form-item>
-          <el-form-item label="Username">
-            <el-input v-model="formUser.username" />
-          </el-form-item>
-          <el-form-item label="Email">
-            <el-input v-model="formUser.email" />
-          </el-form-item>
-          <el-form-item label="Phone">
-            <el-input v-model="formUser.phone" type="tel" />
-          </el-form-item>
-          <el-form-item label="Website">
-            <el-input v-model="formUser.website" />
-          </el-form-item>
-          <el-form-item label="Company">
-            <el-input v-model="formUser.company.name" />
-          </el-form-item>
-          <el-form-item label="Address">
-            <el-input v-model="formUser.address.street" placeholder="Street" />
-            <el-input
-              v-model="formUser.address.suite"
-              placeholder="Suite"
-              style="margin: 8px 0"
-            />
-            <el-input v-model="formUser.address.city" placeholder="City" />
-          </el-form-item>
-        </el-form>
-      </template>
-
-      <template #footer>
-        <el-button @click="drawerVisible = false">Cancel</el-button>
-        <el-button
-          type="primary"
-          v-if="drawerMode === 'add'"
-          :loading="upsertLoading"
-          @click="submitNewUser"
-        >
-          Create
-        </el-button>
-        <el-button
-          type="primary"
-          v-else
-          :loading="upsertLoading"
-          @click="submitEditUser"
-        >
-          Save
-        </el-button>
-      </template>
-    </Drawer>
+    />
+    <UserFormDrawer
+      :model-value="drawerVisible"
+      :mode="drawerMode"
+      :formData="formUser"
+      :loading="upsertLoading"
+      @update:modelValue="drawerVisible = $event"
+      @cancel="drawerVisible = false"
+      @submit="drawerMode === 'add' ? submitNewUser() : submitEditUser()"
+    />
   </div>
 </template>
 
@@ -167,7 +45,6 @@ import {
 } from "@/core/services/userService";
 import type { AddressType, UserListType } from "@/core/types";
 import { useMainStore } from "@/stores/main";
-import { formatDate } from "@/core/utils/helper";
 
 // Stores
 const mainStore = useMainStore();
@@ -195,7 +72,7 @@ const formUser = ref<UserListType>({
   company: { name: "" },
   address: { street: "", suite: "", city: "" },
 });
-const labelPosition = ref<FormProps['labelPosition']>('left');
+const labelPosition = ref<FormProps["labelPosition"]>("left");
 
 // Hooks
 onMounted(async () => {

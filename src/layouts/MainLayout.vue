@@ -1,30 +1,28 @@
 <template>
   <div class="common-layout">
     <el-container>
-        <el-container>
-          <el-aside>
-            <slot name="aside"></slot>
-          </el-aside>
-          <el-main>
-            <el-card :class="cardClass">
-              <slot name="main"></slot>
-            </el-card>
-          </el-main>
-        </el-container>
+      <el-aside>
+        <slot name="aside"></slot>
+      </el-aside>
+      <el-main>
+        <el-card :class="cardClass">
+          <slot name="main"></slot>
+        </el-card>
+      </el-main>
     </el-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useMainStore } from '@/stores/main';
+import { computed } from "vue";
+import { useMainStore } from "@/stores/main";
 
 // Stores
 const mainStore = useMainStore();
 
 // Computed
 const cardClass = computed(() => ({
-  'p-0': mainStore.isPaddingZero,
+  "p-0": mainStore.isPaddingZero,
 }));
 </script>
 

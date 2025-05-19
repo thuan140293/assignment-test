@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    DetailDrawer: typeof import('./src/components/users/DetailDrawer.vue')['default']
     Drawer: typeof import('./src/components/commons/Drawer.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -32,6 +33,8 @@ declare module 'vue' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserFormDrawer: typeof import('./src/components/users/UserFormDrawer.vue')['default']
+    UserTable: typeof import('./src/components/users/UserTable.vue')['default']
     UserToolbar: typeof import('./src/components/users/UserToolbar.vue')['default']
     VerticalNav: typeof import('./src/components/navigations/VerticalNav.vue')['default']
   }

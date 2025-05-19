@@ -19,4 +19,6 @@ interface AddressType {
     zipcode?: string;
 }
 
-export { UserListType, AddressType }
+type ModeTupleType = "add" | "edit";
+
+export { UserListType, AddressType, ModeTupleType }
