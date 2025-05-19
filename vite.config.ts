@@ -39,18 +39,10 @@ export default defineConfig({
   },
   build: {
     target: 'es2020',
-    outDir: 'dist',
     cssCodeSplit: true,
     sourcemap: false,
     reportCompressedSize: true,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.info', 'console.debug']
-      },
-    },
+    minify: 'esbuild',
     chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {
