@@ -20,13 +20,13 @@ src/
 ├── assets/         # Static assets
 ├── components/     # Reusable Vue components
 ├── composables/    # Vue composables and hooks
-├── core/          # Core services, utilities, types and enums
-├── layouts/       # Layout components
-├── middleware/    # Route middleware
-├── router/        # Vue Router configuration
-├── stores/        # Pinia stores
-├── styles/        # Global styles and SCSS
-└── views/         # Page components
+├── core/           # Core services, utilities, types and enums
+├── layouts/        # Layout components
+├── middleware/     # Route middleware
+├── router/         # Vue Router configuration
+├── stores/         # Pinia stores
+├── styles/         # Global styles and SCSS
+└── views/          # Page components
 ```
 
 ## 🛠️ Technical Stack
@@ -68,14 +68,12 @@ The application follows a modular architecture with:
 ## 🔐 Authentication
 
 The application implements a cookie-based authentication system with:
-- Authentication state management
-- Protected routes
+- Authentication state management using Pinia store
+- Protected routes with middleware
 - Automatic layout switching based on auth state
-- Cookie persistence
-
-## 🎨 UI/UX
-
-- Responsive design
-- Smooth transitions between routes
-- Element Plus components integration
-- Custom styling with SCSS
+- Cookie persistence for session management
+- User information management including:
+  - Username: user_test
+  - Password: 12345
+- Token-based authentication
+- Secure cookie storage with expiration
