@@ -11,6 +11,7 @@ declare module 'vue' {
     DetailDrawer: typeof import('./src/components/users/DetailDrawer.vue')['default']
     Drawer: typeof import('./src/components/commons/Drawer.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElContainer: typeof import('element-plus/es')['ElContainer']

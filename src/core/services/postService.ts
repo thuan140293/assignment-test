@@ -3,11 +3,6 @@ import type { PostListType } from "@/core/types";
 
 /** Get list of posts */
 export async function fetchPosts(): Promise<PostListType[]> {
-    const { data } = await api.get<PostListType[]>("/posts");
-    return data;
-}
-
-export async function fetchPostById(id: string): Promise<PostListType> {
-  const response = await api.get<PostListType>(`/posts/${id}`);
-  return response.data;
+  const { data } = await api.get<PostListType[]>("/posts");
+  return data;
 }

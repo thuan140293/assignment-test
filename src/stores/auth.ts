@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import type { LoginFormType } from "@/core/types";
+import { useCookie } from "@/composables/useCookie";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -6,25 +8,23 @@ export const useAuthStore = defineStore('auth', {
     isAuthenticated: false,
   }),
   actions: {
-    setCookie(name: string, value: string, days = 7) {
-      const expires = new Date(Date.now() + days * 864e5).toUTCString()
-      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`
-    },
-    login(username: string, password: string) {
-      if (username === 'user_test' && password === '12345') {
-        this.user = username
-        this.isAuthenticated = true
-        this.setCookie('username', username)
-        this.setCookie('loggedIn', 'true')
-        return true
+    async login(payload: LoginFormType) {
+      const { setCookie } = useCookie();
+      if (payload.username === 'user_test' && payload.password === '12345') {
+        this.user = payload.username;
+        this.isAuthenticated = true;
+        setCookie('username', payload.username, 7 * 24 * 3600);
+        setCookie('isAuthenticated', 'true', 7 * 24 * 3600);
+        return true;
       }
-      throw new Error('Invalid credentials')
+      throw new Error('Invalid credentials');
     },
     logout() {
-      this.user = null
-      this.isAuthenticated = false
-      this.setCookie('username', '', -1)
-      this.setCookie('loggedIn', '', -1)
+      const { setCookie, deleteCookie } = useCookie();
+      this.user = null;
+      this.isAuthenticated = false;
+      deleteCookie('username');
+      deleteCookie('isAuthenticated');
     },
   },
 })

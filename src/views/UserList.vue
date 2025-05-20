@@ -43,7 +43,7 @@ import {
   newUser,
   updateUser,
 } from "@/core/services/userService";
-import type { AddressType, UserListType } from "@/core/types";
+import type { AddressType, DrawerModeType, UserListType } from "@/core/types";
 import { useMainStore } from "@/stores/main";
 
 // Stores
@@ -60,7 +60,7 @@ const detailUser = ref<UserListType | null>(null);
 const detailLoading = shallowRef<boolean>(false);
 
 const drawerVisible = shallowRef<boolean>(false);
-const drawerMode = shallowRef<"detail" | "add" | "edit">("add");
+const drawerMode = shallowRef<DrawerModeType>("add");
 const upsertLoading = shallowRef<boolean>(false);
 const formUser = ref<UserListType>({
   id: 0,
@@ -72,7 +72,6 @@ const formUser = ref<UserListType>({
   company: { name: "" },
   address: { street: "", suite: "", city: "" },
 });
-const labelPosition = ref<FormProps["labelPosition"]>("left");
 
 // Hooks
 onMounted(async () => {

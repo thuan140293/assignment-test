@@ -1,7 +1,7 @@
 <template>
   <Drawer :model-value="modelValue" :title="title" @close="onCancel">
     <template #default>
-      <el-form :model="formData" label-width="100px" label-position="left">
+      <el-form :model="formData" label-width="100px" :label-position="FormLabelPosition.LEFT">
         <el-form-item label="Name">
           <el-input v-model="formData.name" />
         </el-form-item>
@@ -43,6 +43,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import type { UserListType, ModeTupleType } from "@/core/types";
+import { FormLabelPosition } from "@/core/enums/commons";
 
 // Props
 interface Props {

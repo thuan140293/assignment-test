@@ -4,7 +4,7 @@
       <el-skeleton :rows="5" animated />
     </template>
     <template v-else-if="user">
-      <el-descriptions :column="1">
+      <el-descriptions :column="1" label-width="100px" label-align="right">
         <el-descriptions-item label="Name">{{
           user.name
         }}</el-descriptions-item>
@@ -43,7 +43,7 @@ interface Props {
   loading: boolean;
   user: UserListType | null;
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 
 // Emits
 const emit = defineEmits(["update:modelValue", "close"]);

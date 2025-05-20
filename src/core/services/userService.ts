@@ -2,13 +2,13 @@ import api from "@/core/services/api";
 import type { UserListType } from "@/core/types";
 
 /** Get list of users */
-export async function fetchUsers(): Promise<UserListType[]> {
+async function fetchUsers(): Promise<UserListType[]> {
     const { data } = await api.get<UserListType[]>("/users");
     return data;
 }
 
 /** Get details of 1 user */
-export async function fetchUser(id: string): Promise<UserListType> {
+async function fetchUser(id: string): Promise<UserListType> {
     const { data } = await api.get<UserListType>(`/users/${id}`);
     return data;
 }
@@ -17,7 +17,7 @@ export async function fetchUser(id: string): Promise<UserListType> {
  * Create new user
  * @param userPayload Data used to create new user
  */
-export async function newUser(
+async function newUser(
     userPayload: Omit<UserListType, "id" | "date">
 ): Promise<UserListType> {
     const { data } = await api.post<UserListType>("/users", userPayload);
@@ -27,7 +27,7 @@ export async function newUser(
 /**
  * Update a user
  */
-export async function updateUser(
+async function updateUser(
     id: string,
     userPayload: Partial<UserListType>
 ): Promise<UserListType> {
@@ -38,9 +38,17 @@ export async function updateUser(
 /**
  * Delete a user
  */
-export async function deleteUser(
+async function deleteUser(
     id: string,
 ): Promise<UserListType> {
     const { data } = await api.delete<UserListType>(`/users/${id}`);
     return data;
+}
+
+export {
+    fetchUsers,
+    fetchUser,
+    newUser,
+    updateUser,
+    deleteUser
 }

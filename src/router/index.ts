@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/",
     redirect: "/users",
@@ -9,16 +9,19 @@ const routes = [
     path: "/login",
     name: "Login",
     component: () => import("@/views/Login.vue"),
+    meta: { requiresAuth: false },
   },
   {
     path: "/users",
     name: "UserList",
     component: () => import("@/views/UserList.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/posts",
     name: "PostList",
     component: () => import("@/views/PostList.vue"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/:catchAll(.*)",

@@ -15,20 +15,34 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, shallowRef } from "vue";
 import MainLayout from "@/layouts/MainLayout.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 import VerticalNav from "@/components/navigations/VerticalNav.vue";
 import { useAuthStore } from "@/stores/auth";
+import { useCookie } from "@/composables/useCookie";
+import { CookieKeys } from "@/core/enums/commons";
 
 // Stores
 const authStore = useAuthStore();
 
+// Composables
+const { getCookie } = useCookie();
+
+// Refs
+const isAuthenticatedFromCookie = shallowRef<string>("");
+
 // Constants
 const currentYear = new Date().getFullYear();
 
+// Created
+const getIsAuthenticated = getCookie(CookieKeys.IS_AUTHENTICATED);
+isAuthenticatedFromCookie.value = getIsAuthenticated ?? "";
+
 // Computed
 const layoutComponent = computed(() =>
-  authStore.isAuthenticated ? MainLayout : AuthLayout
+  authStore.isAuthenticated || isAuthenticatedFromCookie.value
+    ? MainLayout
+    : AuthLayout
 );
 </script>

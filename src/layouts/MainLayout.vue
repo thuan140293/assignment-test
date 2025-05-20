@@ -34,4 +34,10 @@ const cardClass = computed(() => ({
     }
   }
 }
+
+@media (max-width: 1200px) {
+  .el-aside {
+    width: 100px !important;
+  }
+}
 </style>
