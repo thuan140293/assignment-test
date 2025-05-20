@@ -88,7 +88,7 @@ const router = useRouter();
 const { getCookie } = useCookie();
 const authStore = useAuthStore();
 const { matches: isLargeDesktop } = useMediaQuery(
-  `(min-width: ${MediaScreen.LARGE_DESKTOP})`
+  `(min-width: ${MediaScreen.DESKTOP})`
 );
 
 // Refs

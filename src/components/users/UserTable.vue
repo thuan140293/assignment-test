@@ -58,7 +58,7 @@ const emit = defineEmits(["detail", "edit", "delete"]);
 
 // Composables
 const { matches: isLargeDesktop } = useMediaQuery(
-  `(min-width: ${MediaScreen.LARGE_DESKTOP})`
+  `(min-width: ${MediaScreen.DESKTOP})`
 );
 
 // Refs

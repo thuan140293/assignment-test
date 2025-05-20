@@ -11,7 +11,6 @@ enum FormLabelPosition {
 }
 
 enum MediaScreen {
-  LARGE_DESKTOP = "1200px",
   DESKTOP = "1200px",
   TABLET = "992px",
   MOBILE = "768px",

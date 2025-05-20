@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import type { UserListType, AddressType } from "@/core/types";
+import Drawer from "@/core/components/Drawer.vue";
 
 // Props
 interface Props {

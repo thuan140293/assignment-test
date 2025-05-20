@@ -44,6 +44,7 @@
 import { computed } from "vue";
 import type { UserListType, ModeTupleType } from "@/core/types";
 import { FormLabelPosition } from "@/core/enums/commons";
+import Drawer from "@/core/components/Drawer.vue";
 
 // Props
 interface Props {
