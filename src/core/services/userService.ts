@@ -3,13 +3,13 @@ import type { UserListType } from "@/core/types";
 
 /** Get list of users */
 async function fetchUsers(): Promise<UserListType[]> {
-    const { data } = await api.get<UserListType[]>("/users");
+    const { data } = await api.get<UserListType[]>("users");
     return data;
 }
 
 /** Get details of 1 user */
 async function fetchUser(id: string): Promise<UserListType> {
-    const { data } = await api.get<UserListType>(`/users/${id}`);
+    const { data } = await api.get<UserListType>(`users/${id}`);
     return data;
 }
 
@@ -20,7 +20,7 @@ async function fetchUser(id: string): Promise<UserListType> {
 async function newUser(
     userPayload: Omit<UserListType, "id" | "date">
 ): Promise<UserListType> {
-    const { data } = await api.post<UserListType>("/users", userPayload);
+    const { data } = await api.post<UserListType>("users", userPayload);
     return data;
 }
 
@@ -31,7 +31,7 @@ async function updateUser(
     id: string,
     userPayload: Partial<UserListType>
 ): Promise<UserListType> {
-    const { data } = await api.put<UserListType>(`/users/${id}`, userPayload);
+    const { data } = await api.put<UserListType>(`users/${id}`, userPayload);
     return data;
 }
 
@@ -41,7 +41,7 @@ async function updateUser(
 async function deleteUser(
     id: string,
 ): Promise<UserListType> {
-    const { data } = await api.delete<UserListType>(`/users/${id}`);
+    const { data } = await api.delete<UserListType>(`users/${id}`);
     return data;
 }
 

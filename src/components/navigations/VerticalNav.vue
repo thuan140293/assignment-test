@@ -154,7 +154,7 @@ function handleLogout() {
       }
       .avatar {
         background-color: var(--el-color-primary);
-        color: #fff;
+        color: $white;
       }
     }
   }

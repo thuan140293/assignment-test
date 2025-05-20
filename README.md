@@ -20,7 +20,7 @@ src/
 ├── assets/         # Static assets
 ├── components/     # Reusable Vue components
 ├── composables/    # Vue composables and hooks
-├── core/          # Core utilities and enums
+├── core/          # Core services, utilities, types and enums
 ├── layouts/       # Layout components
 ├── middleware/    # Route middleware
 ├── router/        # Vue Router configuration

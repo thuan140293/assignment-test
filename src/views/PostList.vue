@@ -1,30 +1,41 @@
 <template>
-  <!-- Skeleton + Table -->
-  <el-skeleton :loading="loading" animated :rows="15" class="skeleton-wrapper">
+  <el-skeleton :loading="loading" animated :rows="20" class="skeleton-wrapper">
     <template #default>
-      <el-table
-        :data="tableData"
-        :table-layout="tableLayout"
-      >
-        <el-table-column prop="title" label="Title" width="450" />
-        <el-table-column prop="body" label="Body" />
-        <el-table-column label="Author" fixed="right" width="200">
-          <template #default="scope">
-            {{ scope.row.authorName }}
-          </template>
-        </el-table-column>
-      </el-table>
+      <el-row :gutter="20" class="card-grid">
+        <el-col
+          v-for="item in tableData"
+          :key="item.id"
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
+        >
+          <el-card shadow="hover" class="post-card">
+            <div class="card-inner">
+              <div class="card-header">
+                <span class="title">{{ item.title }}</span>
+              </div>
+              <div class="card-body">
+                <p>{{ item.body }}</p>
+              </div>
+              <div class="card-footer">
+                <el-avatar size="small" icon="el-icon-user" />
+                <span class="author">{{ item.authorName }}</span>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
     </template>
   </el-skeleton>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, shallowRef } from "vue";
-import { TableInstance } from "element-plus";
 import { fetchPosts } from "@/core/services/postService";
 import { fetchUsers } from "@/core/services/userService";
-import { PostListType, UserListType } from "@/core/types";
 import { useMainStore } from "@/stores/main";
+import type { PostListType } from "@/core/types";
 
 // Stores
 const mainStore = useMainStore();
@@ -32,33 +43,79 @@ const mainStore = useMainStore();
 // Refs
 const loading = shallowRef<boolean>(false);
 const tableData = ref<PostListType[]>([]);
-const tableLayout = ref<TableInstance["tableLayout"]>("fixed");
-const userData = ref<UserListType[]>([]);
 
 // Hooks
 onMounted(async () => {
   mainStore.setPaddingZero(false);
-  await onFetchPosts();
+  await loadData();
 });
 
 // Methods
-async function onFetchPosts() {
+async function loadData() {
   loading.value = true;
   try {
     const [posts, users] = await Promise.all([fetchPosts(), fetchUsers()]);
-    userData.value = users;
-
     tableData.value = posts.map((post) => {
       const author = users.find((u) => u.id === post.userId);
-      return {
-        ...post,
-        authorName: author?.name || "Unknown",
-      };
+      return { ...post, authorName: author?.name ?? "Unknown" };
     });
   } catch (err) {
-    console.error("Failed to fetch data", err);
+    console.error(err);
   } finally {
     loading.value = false;
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.skeleton-wrapper {
+  width: 100%;
+}
+
+.card-grid {
+  margin-top: 20px;
+
+  .el-col {
+    margin-bottom: 20px;
+
+    .post-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .card-inner {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .card-header {
+          .title {
+            font-weight: bold;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 8px;
+          }
+        }
+
+        .card-body {
+          flex: 1;
+          font-size: 14px;
+          margin-bottom: 12px;
+        }
+
+        .card-footer {
+          display: flex;
+          align-items: center;
+          font-size: 13px;
+          color: $lavender-gray;
+          margin-top: auto;
+
+          .author {
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

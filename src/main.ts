@@ -7,7 +7,6 @@ import 'element-plus/dist/index.css';
 import '@/styles/global.scss'
 import { useAuthMiddleware } from '@/middleware/auth';
 
-
 const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);

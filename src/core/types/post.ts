@@ -3,6 +3,7 @@ interface PostListType {
     id: number;
     title: string;
     body: string;
+    authorName?: string;
 }
 
 export { PostListType }

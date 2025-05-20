@@ -69,17 +69,25 @@ const onAdd = () => emit("add");
 <style scoped lang="scss">
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 20px 30px;
   border-bottom: 1px solid $light-gray;
+  gap: 10px;
   .search-input {
     width: 30%;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
   .actions {
     display: flex;
     align-items: center;
     gap: 10px;
+    @media (max-width: 768px) {
+      justify-content: end;
+    }
   }
 }
 </style>

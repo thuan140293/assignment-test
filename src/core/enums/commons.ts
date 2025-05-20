@@ -1,6 +1,7 @@
 enum CookieKeys {
   IS_AUTHENTICATED = "isAuthenticated",
   USER_NAME = "username",
+  TOKEN = "token"
 }
 
 enum FormLabelPosition {
@@ -16,4 +17,19 @@ enum MediaScreen {
   MOBILE = "768px",
 }
 
-export { CookieKeys, FormLabelPosition, MediaScreen }
+enum ErrorStatus {
+    UNAUTHORIZED = 401,
+    FORBIDDEN = 403,
+    NOT_FOUND = 404,
+    INTERNAL_SERVER_ERROR = 500,
+    BAD_REQUEST = 400,
+    SERVICE_UNAVAILABLE = 503,
+    TIMEOUT = 408,
+}
+
+enum ErrorAxios {
+    ECONNABORTED = "ECONNABORTED",
+    ERR_NETWORK = "ERR_NETWORK"
+}
+
+export { CookieKeys, FormLabelPosition, MediaScreen, ErrorStatus, ErrorAxios }
