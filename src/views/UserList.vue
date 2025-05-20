@@ -212,10 +212,6 @@ async function handleClickDelete(row: UserListType) {
   }
 }
 
-function formatAddress(addr: AddressType) {
-  return `${addr.street} ${addr.suite} ${addr.city}`;
-}
-
 function resetForm() {
   formUser.value = {
     name: "",

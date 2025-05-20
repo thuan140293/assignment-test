@@ -15,7 +15,7 @@
             formatAddress(row.address)
           }}</template>
         </el-table-column>
-        <el-table-column fixed="right" label="Operations" width="200">
+        <el-table-column fixed="right" label="Actions" width="200">
           <template #default="{ row }">
             <el-button size="default" @click="$emit('detail', row)">
               <el-icon><View /></el-icon>
@@ -51,7 +51,7 @@ interface Props {
   loading: boolean;
   tableLayout: TableInstance["tableLayout"];
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 
 // Emits
 const emit = defineEmits(["detail", "edit", "delete"]);

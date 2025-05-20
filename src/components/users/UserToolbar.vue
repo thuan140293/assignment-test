@@ -6,7 +6,6 @@
       placeholder="Search by name"
       clearable
       class="search-input"
-      @input="onSearch"
     />
 
     <!-- Action Buttons -->
@@ -36,6 +35,7 @@
 
 <script setup lang="ts">
 import { shallowRef, watch } from "vue";
+import { useDebounce } from "@/composables/useDebounce";
 
 // Props
 interface Props {
@@ -53,13 +53,15 @@ const emit = defineEmits<{
 // Refs
 const searchQuery = shallowRef<string>(props.initialQuery || "");
 
+// Composables
+const debouncedQuery = useDebounce(searchQuery, 500);
+
 // Watch
-watch(searchQuery, (val, old) => {
-  if (val !== old) onSearch();
+watch(debouncedQuery, (newVal) => {
+  emit("search", newVal);
 });
 
 // Methods
-const onSearch = () => emit("search", searchQuery.value);
 const onExport = (format: string) => emit("export", format);
 const onAdd = () => emit("add");
 </script>

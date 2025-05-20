@@ -6,9 +6,9 @@
         :data="tableData"
         :table-layout="tableLayout"
       >
-        <el-table-column prop="title" label="Title" />
+        <el-table-column prop="title" label="Title" width="450" />
         <el-table-column prop="body" label="Body" />
-        <el-table-column label="Author" fixed="right">
+        <el-table-column label="Author" fixed="right" width="200">
           <template #default="scope">
             {{ scope.row.authorName }}
           </template>
