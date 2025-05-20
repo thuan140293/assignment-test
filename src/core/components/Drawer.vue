@@ -23,7 +23,7 @@ import { computed } from "vue";
 const props = defineProps({
   modelValue: { type: Boolean, required: true },
   title: { type: String, default: "" },
-  size: { type: String, default: "30%" },
+  size: { type: String, default: "60%" },
   placement: { type: String, default: "right" },
   withHeader: { type: Boolean, default: true },
 });
